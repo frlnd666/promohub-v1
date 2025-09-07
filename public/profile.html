@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PromoHub — Profil</title>
+
+  <!-- Style global -->
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <link rel="stylesheet" href="/src/css/profile.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="icon" href="/src/assets/icon/favicon.ico" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <img src="/src/assets/logo.png" alt="PromoHub" class="header-logo"
+           onerror="this.onerror=null;this.src='/src/assets/icon/logo.png';" />
+      <h1 class="header-title">Profil Saya</h1>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <main class="profile-page" style="padding-bottom:92px;">
+    <!-- Avatar User -->
+    <div class="profile-avatar" id="profile-avatar">U</div>
+    <input type="file" id="avatar-input" accept="image/*" hidden />
+
+    <!-- Profile Info -->
+    <div class="profile-info">
+      <h2 id="profile-name">User Name</h2>
+      <p id="profile-email">user@email.com</p>
+      <p><strong>Nomor Handphone:</strong> <span id="profile-phone">-</span></p>
+      <p><strong>Nomor Rekening:</strong> <span id="profile-bank">-</span></p>
+      <button id="edit-profile-btn" class="btn btn-primary">Edit Profil</button>
+    </div>
+  </main>
+
+  <!-- Account Settings Section -->
+  <section id="account-settings" class="profile-section">
+    <h3>Pengaturan Akun</h3>
+    <div class="settings-item">
+      <button id="change-password-btn" class="btn-outline">Ubah Password</button>
+    </div>
+    <div class="settings-item">
+      <button id="notification-settings-btn" class="btn-outline">Pengaturan Notifikasi</button>
+    </div>
+  </section>
+
+  <!-- Favorite Stores/Promos Section -->
+  <section id="favorites" class="profile-section">
+    <h3>Toko & Promo Favorit</h3>
+    <div id="favorites-list" class="favorites-list">
+      <!-- Dynamically populate favorites list here -->
+    </div>
+  </section>
+
+  <!-- How PromoHub Works Section -->
+  <section id="how-it-works" class="profile-section">
+    <!-- akan di-render via profile.js -->
+  </section>
+
+<section class="logout-section">
+  <button id="logoutBtn" class="btn btn-danger">Logout</button>
+</section>
+
+  <!-- Modal Edit Profil -->
+  <div id="editProfileModal" class="modal">
+    <div class="modal-content">
+      <h2>Edit Profil</h2>
+      <form id="edit-profile-form">
+        <div class="form-group">
+          <label for="edit-name">Nama Lengkap</label>
+          <input type="text" id="edit-name" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-phone">Nomor Handphone</label>
+          <input type="tel" id="edit-phone" placeholder="08xxxxxxxxxx" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-bank">Nomor Rekening</label>
+          <input type="text" id="edit-bank" placeholder="1234567890" required />
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Simpan</button>
+          <button type="button" id="closeModal" class="btn-outline">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <a href="index.html" class="nav-item" aria-label="Beranda">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="wallet.html" class="nav-item" aria-label="Wallet">
+      <i data-lucide="wallet"></i>
+      <span>Wallet</span>
+    </a>
+    <a href="profile.html" class="nav-item active" aria-label="Profil">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="/src/js/profile.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+      setTimeout(() => {
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+          lucide.createIcons();
+        }
+      }, 50);
+    });
+  </script>
+</body>
+</html>

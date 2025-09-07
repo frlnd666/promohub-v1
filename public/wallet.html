@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PromoHub — Wallet</title>
+
+  <!-- Style global -->
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet" href="/src/css/wallet.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="icon" href="/src/assets/icon/favicon.ico" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <img src="/src/assets/logo.png" alt="PromoHub" class="header-logo"
+           onerror="this.onerror=null;this.src='/src/assets/icon/logo.png';" />
+      <h1 class="header-title">Dompet</h1>
+    </div>
+  </header>
+
+  <main class="wallet-page" style="padding-bottom:92px;">
+    
+   <!-- Cashback Card -->
+<section class="cashback-card">
+  <div class="card-header">
+    <span>Cashback</span>
+    <span>PromoHub</span>
+  </div>
+  <div class="card-chip"></div>
+  <div class="card-user-id" id="userId"></div> <!-- Menampilkan userId tanpa "ID:" -->
+  <div class="card-member" id="memberName">Member Name</div>
+  
+</section>
+
+
+
+    <!-- Balance Card -->
+    <section class="balance-card">
+      <div class="wallet-icon">
+        <i data-lucide="wallet"></i>
+      </div>
+      <h2>Saldo Dompet</h2>
+      <div id="wallet-balance">Rp 0</div>
+
+      <!-- Saldo dapat ditarik dipindahkan ke sini -->
+      <div class="withdrawable-info">
+        <span>Saldo Dapat Ditarik</span>
+        <strong id="withdrawableBalance">Rp 0</strong>
+      </div>
+
+      <button id="withdraw-btn" class="btn btn-primary">Tarik Saldo</button>
+    </section>
+
+<!-- Menampilkan klaim yang menunggu approval -->
+<section class="claim-approval">
+  <h3>Klaim yang Menunggu Persetujuan</h3>
+  <div id="pending-claims-list" class="pending-claims-list">
+    <!-- Klaim yang menunggu persetujuan akan dimuat oleh wallet.js -->
+  </div>
+</section>
+
+    <!-- Riwayat Transaksi -->
+    <section class="history">
+      <h3>Riwayat Transaksi</h3>
+      <div id="transaction-list" class="transaction-list">
+        <!-- Transaksi akan dimuat oleh wallet.js -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <a href="index.html" class="nav-item" aria-label="Beranda">
+      <i data-lucide="home"></i>
+      <span>PromoHub</span>
+    </a>
+    <a href="wallet.html" class="nav-item active" aria-label="Wallet">
+      <i data-lucide="wallet"></i>
+      <span>Dompet</span>
+    </a>
+    <a href="profile.html" class="nav-item" aria-label="Profil">
+      <i data-lucide="user"></i>
+      <span>Profil</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="/src/js/wallet.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+      setTimeout(() => {
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+          lucide.createIcons();
+        }
+      }, 50);
+    });
+  </script>
+</body>
+</html>

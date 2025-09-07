@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PromoHub — Login</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet" href="../src/css/auth.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="icon" href="/src/assets/icon/favicon.ico" />
+</head>
+<body>
+  <main class="auth-container">
+    <div class="auth-logo">
+      <img src="/src/assets/logo.png" alt="PromoHub"
+           onerror="this.onerror=null;this.src='/src/assets/icon/logo.png';" />
+    </div>
+    <h1 class="auth-title">Masuk ke PromoHub</h1>
+
+    <form id="login-form" class="auth-form">
+      <div class="input-group">
+        <i data-lucide="mail"></i>
+        <input type="email" id="login-email" placeholder="you@email.com" required />
+      </div>
+      <div class="input-group">
+        <i data-lucide="lock"></i>
+        <input type="password" id="login-password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
+<!-- Tempat pesan error -->
+<div id="login-error" class="auth-error" role="alert" style="display:none;"></div>
+
+    <div class="auth-switch">
+      Belum punya akun?
+      <a href="register.html">Daftar sekarang</a>
+    </div>
+  </main>
+
+  <script type="module" src="../src/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

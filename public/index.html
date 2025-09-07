@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PromoHub — Beranda</title>
+
+  <!-- Style global -->
+  <link rel="stylesheet" href="/src/css/style.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="icon" href="/src/assets/icon/favicon.ico" />
+</head>
+<body>
+  
+  <!-- Header -->
+<header class="header">
+  <div class="header-brand">
+    <img src="/src/assets/logo.png" alt="PromoHub" class="header-logo"
+         onerror="this.onerror=null;this.src='/src/assets/icon/logo.png';" />
+    <h1 class="header-title">PromoHub</h1>
+  </div>
+
+  <!-- Notifikasi -->
+  <div class="header-actions">
+    <button id="notificationBtn" class="notification-btn" aria-label="Notifikasi">
+      <i data-lucide="bell"></i>
+      <span id="notifBadge" class="notif-badge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Panel Notifikasi -->
+<div id="notificationPanel" class="notification-panel hidden">
+  <h3>Notifikasi</h3>
+  <ul id="notificationList"></ul>
+</div>
+
+  <main class="container" style="padding-bottom:92px;">
+    <!-- Banner -->
+    <section class="banner" aria-hidden="false">
+      <a id="bannerLink" href="#" target="_blank" rel="noopener">
+        <img id="bannerImg" src="/src/assets/banner1.jpg" alt="Promo Banner"
+             onerror="this.onerror=null;this.src='/src/assets/placeholder/banner.jpg';" />
+      </a>
+    </section>
+
+    <!-- Cara Klaim -->
+    <section class="card cara-klaim" aria-label="Cara klaim">
+      <div class="name">Cara Klaim</div>
+      <div class="step">
+        <img src="/src/assets/cara/step1.png" alt="Step 1"
+             onerror="this.onerror=null;this.src='/src/assets/placeholder/step1.jpg';" />
+        <p>Temukan produk pada tab <b>Marketplace / Toko / Promo</b>.</p>
+      </div>
+      <div class="step">
+        <img src="/src/assets/cara/step2.png" alt="Step 2"
+             onerror="this.onerror=null;this.src='/src/assets/placeholder/step2.jpg';" />
+        <p>Tekan <b>Buka Marketplace</b> untuk menuju toko.</p>
+      </div>
+      <div class="step">
+        <img src="/src/assets/cara/step3.png" alt="Step 3"
+             onerror="this.onerror=null;this.src='/src/assets/placeholder/step3.jpg';" />
+        <p>Lakukan pembelian sesuai ketentuan promo.</p>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <nav class="tabs" role="tablist" aria-label="Kategori">
+      <button id="tab-marketplaces" class="tab active" data-tab="marketplaces"
+              role="tab" aria-selected="true">Marketplace</button>
+      <button id="tab-shops" class="tab" data-tab="shops"
+              role="tab" aria-selected="false">Toko</button>
+      <button id="tab-promos" class="tab" data-tab="promos"
+              role="tab" aria-selected="false">Promo</button>
+    </nav>
+
+    <!-- Sections -->
+    <section id="marketplaces" class="section active" role="tabpanel" aria-labelledby="tab-marketplaces">
+      <div id="marketplaceSection"></div>
+    </section>
+
+    <section id="shops" class="section" role="tabpanel" aria-labelledby="tab-shops">
+      <div id="shopsGrid" class="grid-section" aria-live="polite"></div>
+    </section>
+
+    <section id="promos" class="section" role="tabpanel" aria-labelledby="tab-promos">
+      <div id="promosGrid" class="grid-section" aria-live="polite"></div>
+    </section>
+
+    <!-- Popup Marketplace -->
+    <div id="marketplacePopup" class="marketplace-popup" aria-hidden="true">
+      <div class="marketplace-content" role="dialog" aria-modal="true">
+        <h4 style="margin-bottom:.5rem;">Buka Marketplace</h4>
+        <p class="price">Anda akan diarahkan ke marketplace eksternal.</p>
+        <div id="marketplaceList" class="marketplace-list" aria-live="polite">
+          <!-- Struktur contoh (JS akan generate dinamis):
+          <a href="https://shopee.co.id" target="_blank" rel="noopener"
+             class="marketplace-item vertical">
+            <img src="/src/assets/marketplace/shopee.png" alt="Shopee"
+                 onerror="this.onerror=null;this.src='/src/assets/placeholder/shop-placeholder.png';" />
+            <div>Shopee</div>
+          </a>
+          -->
+        </div>
+        <div style="margin-top:1rem;">
+          <button id="closeMarketplace" class="btn btn-outline" type="button">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" role="navigation" aria-label="Navigasi bawah">
+    <a href="index.html" class="nav-item active" aria-label="Beranda">
+      <i data-lucide="home"></i>
+      <span>PromoHub</span>
+    </a>
+    <a href="wallet.html" class="nav-item" aria-label="Wallet">
+      <i data-lucide="wallet"></i>
+      <span>Dompet</span>
+    </a>
+    <a href="profile.html" class="nav-item" aria-label="Profil">
+      <i data-lucide="user"></i>
+      <span>Profil</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="/src/js/config.js"></script>
+  <script type="module" src="/src/js/storage.js"></script>
+  <script type="module" src="/src/js/products.js"></script>
+  <script type="module" src="/src/js/index.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+      setTimeout(() => {
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+          lucide.createIcons();
+        }
+      }, 50);
+    });
+  </script>
+  
+  
+</body>
+</html>
