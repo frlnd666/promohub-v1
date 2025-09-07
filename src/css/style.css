@@ -1,0 +1,590 @@
+/* === Global Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* === Theme Tokens === */
+:root {
+  --bg: #0e0e12;
+  --card: #121216;
+  --muted: #9ca3af;
+
+  --accent1: #0d9488;       /* Teal 600 */
+  --accent2: #14b8a6;       /* Teal 500 */
+  --accent-hover: #2dd4bf;  /* Teal 400 */
+
+  --orange: #f59e0b;        /* Amber 500 (legacy accent for CTA) */
+  --orange-2: #fb923c;      /* Amber 400 untuk gradasi */
+
+  --ring: rgba(45, 212, 191, 0.45); /* ring teal */
+  --shadow-deep: rgba(0,0,0,0.5);
+}
+
+body {
+  background: var(--bg);
+  color: #f5f5f7;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* === Header Sticky === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 122px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  padding: 0 1rem; /* diganti, bukan 1rem 0 */
+  display: flex;
+  justify-content: space-between; /* diganti, bukan center */
+  align-items: center;
+  box-shadow: 0 6px 20px rgba(15, 15, 20, 0.35);
+}
+
+.header-brand { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.75rem; 
+}
+
+.header-logo {
+  width: 120px; 
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%; /* bulat */
+  background: rgba(255,255,255,0.08);
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.15);
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+
+/* Tombol notifikasi */
+.notification-btn {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border: none;
+  padding: 0.6rem;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Ikon notifikasi (bell) - lucide jadi <svg> */
+.notification-btn svg {
+  width: 28px;
+  height: 28px;
+  animation: pulseGlow 2s infinite;
+}
+
+/* Animasi glow + warna */
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    stroke: #ff3b3b; /* merah */
+    filter: drop-shadow(0 0 0 rgba(255,59,59,0.6));
+  }
+  25% {
+    transform: scale(1.1);
+    stroke: #ff7300; /* oranye */
+    filter: drop-shadow(0 0 6px rgba(255,115,0,0.9));
+  }
+  50% {
+    transform: scale(1.2);
+    stroke: #ffd600; /* kuning */
+    filter: drop-shadow(0 0 10px rgba(255,214,0,0.9));
+  }
+  75% {
+    transform: scale(1.1);
+    stroke: #ff7300; /* oranye */
+    filter: drop-shadow(0 0 6px rgba(255,115,0,0.9));
+  }
+  100% {
+    transform: scale(1);
+    stroke: #ff3b3b; /* kembali merah */
+    filter: drop-shadow(0 0 0 rgba(255,59,59,0.6));
+  }
+}
+
+/* Badge notifikasi */
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ff3b3b;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: none; /* hanya tampil jika ada notif */
+}
+
+/* === Notification Panel === */
+.notification-panel {
+  position: absolute;
+  top: 122px; /* tepat di bawah header */
+  right: 1rem;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: rgba(30, 30, 45, 0.75);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  padding: 1rem;
+  color: #fff;
+  z-index: 1200;
+  transition: all 0.3s ease-in-out;
+}
+
+.notification-panel.hidden {
+  display: none;
+}
+
+.notification-panel h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+/* === Notification Items === */
+#notificationList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notif-item {
+  padding: 0.75rem 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.notif-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(4px);
+  cursor: pointer;
+}
+
+/* Scrollbar styling */
+.notification-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.notification-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+.notification-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* === Banner === */
+.banner {
+  width: 100%; height: 285px;
+  border-radius: 14px;
+  overflow: hidden; margin-bottom: 1rem;
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.banner img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.banner a:hover img { transform: scale(1.02); }
+
+/* === Tabs (dengan outer shadow abu-abu tealish) === */
+.tabs {
+  display: flex; 
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tab {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  /* outer shadow abu-abu bernuansa teal */
+  box-shadow: 0 3px 8px rgba(128, 128, 128, 0.35);
+}
+
+.tab:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  border-color: rgba(0, 128, 128, 0.4);
+  box-shadow: 0 5px 14px rgba(0, 128, 128, 0.35);
+}
+
+.tab.active {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.45),
+              0 4px 10px rgba(0,224,255,0.25);
+}
+
+/* Ripple effect (tab) */
+.tab::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.4);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.tab:active::after {
+  animation: rippleEffect 0.6s ease-out;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+@keyframes rippleEffect {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+  80% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* === Sections === */
+.section { display: none; width: 100%; }
+.section.active { display: block; }
+
+/* === Grid Wrappers (Default) === */
+.grid-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 900px) {
+  .grid-section { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+  .grid-section { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* === Override khusus untuk Toko & Promo === */
+#shopsGrid,
+#promosGrid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+@media (min-width: 900px) {
+  #shopsGrid,
+  #promosGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (min-width: 1200px) {
+  #shopsGrid,
+  #promosGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* === Card Global === */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 0.9rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.36);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.card img {
+  width: 100%; height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+}
+.card .name { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+.card .price { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; }
+.card .actions { display:flex; gap:0.5rem; justify-content:flex-end; align-items:center; margin-top:0.5rem; }
+
+/* === Shop Cards === */
+.shop-logo { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; margin: 0 auto 0.6rem; display:block; }
+.shop-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; text-align:center; }
+.shop-followers { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; text-align:center; }
+
+/* === Promos === */
+.promo-title { font-weight:700; color:#fff; margin-bottom: .25rem; }
+.promo-desc { color: var(--muted); font-size: 0.9rem; }
+
+/* === Cashback text === */
+.cashback { color: var(--orange); font-weight:600; font-size:0.95rem; margin-bottom:0.5rem; text-align:center; }
+
+/* === Cara Klaim Modern === */
+.card.cara-klaim {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  animation: fadeInUp 0.7s ease forwards;
+}
+.cara-klaim .name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--orange);
+  text-align: center;
+  letter-spacing: 0.6px;
+}
+.cara-klaim .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.cara-klaim .step img {
+  width: 150px;
+  height: 150px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cara-klaim .step img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 224, 255, 0.4);
+}
+.cara-klaim .step p {
+  font-size: 0.90rem;
+  font-weight: 500;
+  color: #d7d7db;
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.4;
+}
+
+/* === Kategori: Futuristic Capsule Title === */
+.category-section { margin-bottom: 1.6rem; }
+.category-title {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #14b8a6;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(0, 224, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  margin-bottom: 0.7rem;
+}
+
+/* === Buttons (lengkap + KUNJUNGI) === */
+a.btn { text-decoration: none; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: 0.48rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-size: 0.9rem;
+  will-change: transform, box-shadow;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 22px rgba(20, 184, 166, 0.25);
+}
+.btn-primary:hover {
+  filter: brightness(1.04);
+  box-shadow: 0 10px 26px rgba(20, 184, 166, 0.35);
+}
+
+/* tombol outline standar */
+.btn-outline {
+  background: transparent;
+  color: var(--accent1);
+  border: 1px solid rgba(79,70,229,0.14);
+}
+.btn-outline:hover {
+  border-color: rgba(45, 212, 191, 0.6);
+  color: var(--accent-hover);
+}
+
+/* === KUNJUNGI: CTA berwarna (dipulihkan) === */
+.btn-visit {
+  background: linear-gradient(135deg, var(--orange), var(--orange-2));
+  color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 26px rgba(251, 146, 60, 0.35), 0 2px 0 rgba(0,0,0,0.2) inset;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+}
+.btn-visit:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 30px rgba(251, 146, 60, 0.45);
+}
+.btn-visit:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(251, 146, 60, 0.35) inset;
+}
+
+/* tombol share kecil (tetap) */
+.btn-share { padding: 0.4rem 0.6rem; font-size: 0.85rem; }
+
+/* === Marketplace Layout === */
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+@media (min-width: 900px) {
+  .marketplace-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+  .marketplace-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.marketplace-grid .card { text-align: center; padding: 1rem; }
+.marketplace-grid .shop-logo { width: 72px; height: 72px; border-radius: 14px; margin-bottom: 0.6rem; }
+.marketplace-grid .actions { justify-content: center; }
+
+/* === Popup Marketplace === */
+.marketplace-popup {
+  position: fixed; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(2,2,6,0.7);
+  z-index: 60; padding: 1rem;
+}
+.marketplace-popup.active { display: flex; }
+.marketplace-content {
+  width: 100%; max-width: 420px; background: var(--card);
+  padding: 1.2rem; border-radius: 12px; text-align:center;
+  box-shadow: 0 14px 38px rgba(0,0,0,0.6);
+}
+.marketplace-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.marketplace-item.vertical {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.75rem;
+  background: #1f1f2b;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.marketplace-item.vertical:hover { background: #2d2d3a; }
+.marketplace-item.vertical img {
+  width: 38px; height: 38px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+.marketplace-item.vertical div {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #f5f5f7;
+  text-align: left;
+}
+
+/* === Bottom Nav === */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  background: rgba(16,16,20,0.98);
+  border-top: 1px solid rgba(255,255,255,0.03);
+  display:flex; justify-content:space-around;
+  padding: .55rem 0; z-index:70;
+}
+.nav-item {
+  display:flex; flex-direction: column; align-items:center;
+  text-decoration:none; color:var(--muted);
+}
+.nav-item i, .nav-item svg {
+  width:27px; height:27px;
+  margin-bottom:.18rem;
+  stroke: var(--muted);
+  transition: stroke .18s ease, color .18s ease;
+}
+.nav-item span { font-size: 0.8rem; color: var(--accent1); }
+.nav-item:hover i, .nav-item:hover svg { stroke: var(--accent-hover); color: #fff; }
+.nav-item.active i, .nav-item.active svg { stroke: var(--accent1); color: #fff; }
+.nav-item.active span { color: #fff; }
+
+/* === Animations === */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsive tweaks === */
+@media (max-width: 420px) {
+  .header-logo { width: 72px; height: 72px; }
+  .header-title { font-size: 1.3rem; }
+  .banner { height: 140px; }
+  .marketplace-grid .card { padding: .8rem; }
+}
+
+/* === Smooth Scrolling Global === */
+html {
+  scroll-behavior: smooth;
+}
